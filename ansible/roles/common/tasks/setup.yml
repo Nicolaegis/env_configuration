@@ -1,0 +1,34 @@
+- name: "Blacklist SMBus controller"
+  lineinfile:
+    path: /etc/modprobe.d/qemu-blacklist.conf
+    insertafter: '^blacklist bochs-drm'
+    line: blacklist i2c-piix4
+
+- name: "Activate the blacklist for SMBus controller"
+  shell: update-initramfs -u
+
+- name: "Reduce the selection time to 0"
+  replace:
+    path: /etc/default/grub
+    regexp: '^GRUB_TIMEOUT=5'
+    replace: GRUB_TIMEOUT=0
+
+- name: "Activate the grub changes"
+  shell: update-grub
+
+- name: "Adding user nicoalegis to privilege specifications"
+  lineinfile:
+    path: /etc/sudoers
+    state: present
+    insertafter: '^root    ALL=(ALL:ALL) ALL'
+    line: 'nicoalegis ALL=(ALL:ALL) ALL'
+    validate: /usr/sbin/visudo -cf %s
+
+- name: "Adding user nicoalegis to sudoes"
+  lineinfile:
+    path: /etc/sudoers
+    state: present
+    insertafter: '#includedir /etc/sudoers.d'
+    line: 'nicolaegis ALL=(ALL) NOPASSWD: ALL'
+    validate: /usr/sbin/visudo -cf %s
+

@@ -1,0 +1,39 @@
+- name: "Update repositories"
+  apt:
+    update_cache: yes
+  
+- name: "Installing openssh-server packages"
+  apt:
+    name: openssh-server
+    state: present
+
+- name: "Installing curl packages"
+  apt:
+    name: curl
+    state: present
+
+- name: "Installing net-tools packages"
+  apt:
+    name: net-tools
+    state: present
+
+- name: "Installing dnsutils packages"
+  apt:
+    name: dnsutils
+    state: present
+
+- name: "Installing git packages"
+  apt:
+    name: git
+    state: present
+
+- name: "Installing yamllint packages"
+  apt:
+    name: yamllint
+    state: present
+
+- name: "Installing docker-compose packages"
+  apt:
+    name: docker-compose
+    state: present
+
